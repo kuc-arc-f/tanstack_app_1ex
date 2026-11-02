@@ -42,6 +42,12 @@ npm run dev                # http://localhost:3000
 ```
 
 ***
+### blog
+
+https://zenn.dev/knaka0209/scraps/de8b9a6cdb85b1
+
+
+***
 ### version
 * V_0_9_1: new
 
