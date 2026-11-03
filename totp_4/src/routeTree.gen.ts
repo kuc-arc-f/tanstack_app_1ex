@@ -25,6 +25,7 @@ import { Route as ApiSetupRouteImport } from './routes/api/setup'
 import { Route as ApiTestRouteImport } from './routes/api/test'
 import { Route as ApiTodosRouteImport } from './routes/api/todos'
 import { Route as ApiUser_get_idRouteImport } from './routes/api/user_get_id'
+import { Route as ApiUser_get_nameRouteImport } from './routes/api/user_get_name'
 import { Route as PathlessLayoutNestedLayoutRouteARouteImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 import { Route as PathlessLayoutNestedLayoutRouteBRouteImport } from './routes/_pathlessLayout/_nested-layout/route-b'
 
@@ -107,6 +108,11 @@ const ApiUser_get_idRoute = ApiUser_get_idRouteImport.update({
   path: '/api/user_get_id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiUser_get_nameRoute = ApiUser_get_nameRouteImport.update({
+  id: '/api/user_get_name',
+  path: '/api/user_get_name',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PathlessLayoutNestedLayoutRouteARoute =
   PathlessLayoutNestedLayoutRouteARouteImport.update({
     id: '/route-a',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/api/test': typeof ApiTestRoute
   '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
+  '/api/user_get_name': typeof ApiUser_get_nameRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
 }
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/api/test': typeof ApiTestRoute
   '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
+  '/api/user_get_name': typeof ApiUser_get_nameRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
 }
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/api/test': typeof ApiTestRoute
   '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
+  '/api/user_get_name': typeof ApiUser_get_nameRoute
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
 }
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/api/test'
     | '/api/todos'
     | '/api/user_get_id'
+    | '/api/user_get_name'
     | '/route-a'
     | '/route-b'
   fileRoutesByTo: FileRoutesByTo
@@ -212,6 +222,7 @@ export interface FileRouteTypes {
     | '/api/test'
     | '/api/todos'
     | '/api/user_get_id'
+    | '/api/user_get_name'
     | '/route-a'
     | '/route-b'
   id:
@@ -232,6 +243,7 @@ export interface FileRouteTypes {
     | '/api/test'
     | '/api/todos'
     | '/api/user_get_id'
+    | '/api/user_get_name'
     | '/_pathlessLayout/_nested-layout/route-a'
     | '/_pathlessLayout/_nested-layout/route-b'
   fileRoutesById: FileRoutesById
@@ -252,6 +264,7 @@ export interface RootRouteChildren {
   ApiTestRoute: typeof ApiTestRoute
   ApiTodosRoute: typeof ApiTodosRoute
   ApiUser_get_idRoute: typeof ApiUser_get_idRoute
+  ApiUser_get_nameRoute: typeof ApiUser_get_nameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -368,6 +381,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiUser_get_idRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/user_get_name': {
+      id: '/api/user_get_name'
+      path: '/api/user_get_name'
+      fullPath: '/api/user_get_name'
+      preLoaderRoute: typeof ApiUser_get_nameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_pathlessLayout/_nested-layout/route-a': {
       id: '/_pathlessLayout/_nested-layout/route-a'
       path: '/route-a'
@@ -431,6 +451,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTestRoute: ApiTestRoute,
   ApiTodosRoute: ApiTodosRoute,
   ApiUser_get_idRoute: ApiUser_get_idRoute,
+  ApiUser_get_nameRoute: ApiUser_get_nameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

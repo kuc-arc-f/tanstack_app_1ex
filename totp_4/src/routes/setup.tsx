@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getCookie, setCookie } from '@tanstack/react-start/server'
-import { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Mail, Lock, LogIn } from 'lucide-react';
 import LibAuth from '../lib/LibAuth'
 import Config from '../config'
@@ -11,6 +11,7 @@ export const Route = createFileRoute('/setup')({
 
 function RouteComponent() {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [imgSrc, setImgSrc] = useState('');
   const [auth2Disp, setAuth2Disp] = useState('');
@@ -28,6 +29,25 @@ function RouteComponent() {
     return data;    
   }
   const say = (m) => { $('msg').textContent = m || ''; };
+
+  useEffect(() => {
+    (async() => {
+      try{
+        const value = LibAuth.getCookieValue(Config.COOKIE_AUTH_1_KEY)
+        console.log('value=', value);
+        const resp  = await apiHandle('/api/user_get_name', 
+          { userId: Number(value) }
+        );
+        console.log(resp);
+        if(!resp.success){
+          alert("error")
+        }else{
+          //console.log(resp.data)
+          setUsername(resp.data.username);
+        }         
+      }catch(e){console.log(e)}
+    })();   
+  }, []);
 
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
@@ -90,7 +110,7 @@ function RouteComponent() {
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
-        
+        <div className="w-full text-center mb-2 text-lg">{username}</div>
         <div className="text-center mb-8">
           <h1 className="text-2xl font-semibold text-neutral-900 mb-2">2段階認証</h1>
           <p className="text-neutral-500 text-sm"></p>
