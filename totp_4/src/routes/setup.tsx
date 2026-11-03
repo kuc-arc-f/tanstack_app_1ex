@@ -79,6 +79,14 @@ function RouteComponent() {
 
   }
 
+  const logout = async() => {
+    console.log("#logout");
+    try{
+      LibAuth.logout();
+    }catch(e){  console.log(e)}
+
+  }
+
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
@@ -110,7 +118,7 @@ function RouteComponent() {
             className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
             >有効化</button>
             < hr />
-            <button onClick={()=>{}} 
+            <button onClick={()=>{ logout();}} 
             className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
             >ログアウト</button>
           </div>

@@ -38,10 +38,14 @@ export const logoutFn = createServerFn({
   method: 'POST',
 }).handler(async () => {
   // Cookieを削除
-  setCookie(Config.COOKIE_AUTH_2_KEY, '', {
+  await setCookie(Config.COOKIE_AUTH_2_KEY, '', {
     maxAge: 0,
     path: '/',
-  })
+  });
+  await setCookie(Config.COOKIE_AUTH_1_KEY, '', {
+    maxAge: 0,
+    path: '/',
+  });
 
   return {
     success: true,
