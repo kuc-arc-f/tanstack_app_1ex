@@ -10,11 +10,11 @@ export const Route = createFileRoute('/setup')({
 })
 
 function RouteComponent() {
-  //const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [imgSrc, setImgSrc] = useState('');
   const [auth2Disp, setAuth2Disp] = useState('');
+  const [statSend, setStatSend] = useState('');
 
   const apiHandle = async function(path, body){
     console.log("#apiHandle")
@@ -83,6 +83,7 @@ function RouteComponent() {
       }      
       const element = document.getElementById('email') as HTMLInputElement;
       console.log("email=", element.value);
+      setStatSend("true")
       const resp  = await apiHandle('/api/otp_mail_request', 
         { userId: Number(value) , email: element.value}
       );
@@ -127,6 +128,11 @@ function RouteComponent() {
           <button onClick={()=>{enable();}} 
           className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
           >認証コード送信</button>
+          {statSend ? (
+            <div>
+              <p className="text-green-600">認証コード送信中です。しばらくお待ちください。</p>
+            </div>
+           ) : (<></>)}  
           < hr />
           <button onClick={()=>{ logout();}} 
           className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
