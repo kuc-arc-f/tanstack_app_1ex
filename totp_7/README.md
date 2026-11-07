@@ -21,6 +21,9 @@ TanStack Start , authrize 2FA TOTP PostgreSQL
 
 
 ***
+* Table: schema.sql
+
+***
 
 * .env
 ```
