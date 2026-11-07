@@ -7,6 +7,7 @@ import { promises as fs } from 'fs';
 
 // session.regenerate を Promise 化 (セッション固定攻撃対策)
 const regenerate = (req) => new Promise((resolve, reject) => req.session.regenerate((e) => (e ? reject(e) : resolve())));
+const DUMMY_HASH = bcrypt.hashSync('dummy-password', 12); // ユーザー存在判定のタイミング差を減らす
 
 
 export const Route = createFileRoute('/api/login')({
