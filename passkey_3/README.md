@@ -50,4 +50,7 @@ npm run dev                # http://localhost:3000
 * V_0_9_1: new
 
 ***
+### blog
+
+https://zenn.dev/knaka0209/scraps/303768b166942b
 
