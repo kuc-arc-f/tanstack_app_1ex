@@ -48,17 +48,6 @@ function RouteComponent() {
           location.href = "/"
           return;
         }
-        /*
-        const resp  = await apiHandle('/api/user_get_name', 
-          { userId: Number(value) }
-        );
-        console.log(resp);
-        if(!resp.success){
-          alert("error")
-        }else{
-          setUsername(resp.data.username);
-        }         
-        */
       }catch(e){console.log(e)}
     })();   
   }, []);
@@ -121,7 +110,7 @@ function RouteComponent() {
         console.log(resp2)
         LibAuth.setCookie(Config.COOKIE_AUTH_2_KEY, Number(value) , 30);
         //alert("OK")
-        //location.href = "/";
+        location.href = "/";
       }         
     }catch(e){  console.log(e)}
   }
@@ -140,9 +129,11 @@ function RouteComponent() {
         <div className="text-left mb-2">
           <h1 className="text-2xl font-semibold text-neutral-900 mb-2">ログイン</h1>
           <p className="text-neutral-500 text-sm"
-          >ユーザー名は空欄でもOK<br />(Windows Helloが 保存済みパスキーを表示します) </p>
+          >Windows Helloが 保存済みパスキーを表示します </p>
+          {/*
           <input id="user_name_login" placeholder="ユーザー名(任意)" 
           className="w-full my-2 p-2 border border-gray-300 rounded" /><br />          
+          */}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
