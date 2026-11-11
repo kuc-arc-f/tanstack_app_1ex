@@ -15,7 +15,6 @@ import { Route as CustomScriptDotjsRouteImport } from './routes/customScript[.]j
 import { Route as DeferredRouteImport } from './routes/deferred'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RedirectRouteImport } from './routes/redirect'
-import { Route as SetupRouteImport } from './routes/setup'
 import { Route as Setup_passkeyRouteImport } from './routes/setup_passkey'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
@@ -26,11 +25,9 @@ import { Route as ApiLogin_verifyRouteImport } from './routes/api/login_verify'
 import { Route as ApiRegisterRouteImport } from './routes/api/register'
 import { Route as ApiRegister_optionsRouteImport } from './routes/api/register_options'
 import { Route as ApiRegister_verifyRouteImport } from './routes/api/register_verify'
-import { Route as ApiSetupRouteImport } from './routes/api/setup'
 import { Route as ApiTestRouteImport } from './routes/api/test'
 import { Route as ApiTodosRouteImport } from './routes/api/todos'
 import { Route as ApiUser_get_idRouteImport } from './routes/api/user_get_id'
-import { Route as ApiUser_get_nameRouteImport } from './routes/api/user_get_name'
 import { Route as PathlessLayoutNestedLayoutRouteARouteImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 import { Route as PathlessLayoutNestedLayoutRouteBRouteImport } from './routes/_pathlessLayout/_nested-layout/route-b'
 
@@ -61,11 +58,6 @@ const LoginRoute = LoginRouteImport.update({
 const RedirectRoute = RedirectRouteImport.update({
   id: '/redirect',
   path: '/redirect',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SetupRoute = SetupRouteImport.update({
-  id: '/setup',
-  path: '/setup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Setup_passkeyRoute = Setup_passkeyRouteImport.update({
@@ -118,11 +110,6 @@ const ApiRegister_verifyRoute = ApiRegister_verifyRouteImport.update({
   path: '/api/register_verify',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiSetupRoute = ApiSetupRouteImport.update({
-  id: '/api/setup',
-  path: '/api/setup',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiTestRoute = ApiTestRouteImport.update({
   id: '/api/test',
   path: '/api/test',
@@ -136,11 +123,6 @@ const ApiTodosRoute = ApiTodosRouteImport.update({
 const ApiUser_get_idRoute = ApiUser_get_idRouteImport.update({
   id: '/api/user_get_id',
   path: '/api/user_get_id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiUser_get_nameRoute = ApiUser_get_nameRouteImport.update({
-  id: '/api/user_get_name',
-  path: '/api/user_get_name',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PathlessLayoutNestedLayoutRouteARoute =
@@ -162,7 +144,6 @@ export interface FileRoutesByFullPath {
   '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
   '/redirect': typeof RedirectRoute
-  '/setup': typeof SetupRoute
   '/setup_passkey': typeof Setup_passkeyRoute
   '/signup': typeof SignupRoute
   '/api/enable': typeof ApiEnableRoute
@@ -172,11 +153,9 @@ export interface FileRoutesByFullPath {
   '/api/register': typeof ApiRegisterRoute
   '/api/register_options': typeof ApiRegister_optionsRoute
   '/api/register_verify': typeof ApiRegister_verifyRoute
-  '/api/setup': typeof ApiSetupRoute
   '/api/test': typeof ApiTestRoute
   '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
-  '/api/user_get_name': typeof ApiUser_get_nameRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
 }
@@ -186,7 +165,6 @@ export interface FileRoutesByTo {
   '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
   '/redirect': typeof RedirectRoute
-  '/setup': typeof SetupRoute
   '/setup_passkey': typeof Setup_passkeyRoute
   '/signup': typeof SignupRoute
   '/api/enable': typeof ApiEnableRoute
@@ -196,11 +174,9 @@ export interface FileRoutesByTo {
   '/api/register': typeof ApiRegisterRoute
   '/api/register_options': typeof ApiRegister_optionsRoute
   '/api/register_verify': typeof ApiRegister_verifyRoute
-  '/api/setup': typeof ApiSetupRoute
   '/api/test': typeof ApiTestRoute
   '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
-  '/api/user_get_name': typeof ApiUser_get_nameRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
 }
@@ -212,7 +188,6 @@ export interface FileRoutesById {
   '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
   '/redirect': typeof RedirectRoute
-  '/setup': typeof SetupRoute
   '/setup_passkey': typeof Setup_passkeyRoute
   '/signup': typeof SignupRoute
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
@@ -223,11 +198,9 @@ export interface FileRoutesById {
   '/api/register': typeof ApiRegisterRoute
   '/api/register_options': typeof ApiRegister_optionsRoute
   '/api/register_verify': typeof ApiRegister_verifyRoute
-  '/api/setup': typeof ApiSetupRoute
   '/api/test': typeof ApiTestRoute
   '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
-  '/api/user_get_name': typeof ApiUser_get_nameRoute
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
 }
@@ -239,7 +212,6 @@ export interface FileRouteTypes {
     | '/deferred'
     | '/login'
     | '/redirect'
-    | '/setup'
     | '/setup_passkey'
     | '/signup'
     | '/api/enable'
@@ -249,11 +221,9 @@ export interface FileRouteTypes {
     | '/api/register'
     | '/api/register_options'
     | '/api/register_verify'
-    | '/api/setup'
     | '/api/test'
     | '/api/todos'
     | '/api/user_get_id'
-    | '/api/user_get_name'
     | '/route-a'
     | '/route-b'
   fileRoutesByTo: FileRoutesByTo
@@ -263,7 +233,6 @@ export interface FileRouteTypes {
     | '/deferred'
     | '/login'
     | '/redirect'
-    | '/setup'
     | '/setup_passkey'
     | '/signup'
     | '/api/enable'
@@ -273,11 +242,9 @@ export interface FileRouteTypes {
     | '/api/register'
     | '/api/register_options'
     | '/api/register_verify'
-    | '/api/setup'
     | '/api/test'
     | '/api/todos'
     | '/api/user_get_id'
-    | '/api/user_get_name'
     | '/route-a'
     | '/route-b'
   id:
@@ -288,7 +255,6 @@ export interface FileRouteTypes {
     | '/deferred'
     | '/login'
     | '/redirect'
-    | '/setup'
     | '/setup_passkey'
     | '/signup'
     | '/_pathlessLayout/_nested-layout'
@@ -299,11 +265,9 @@ export interface FileRouteTypes {
     | '/api/register'
     | '/api/register_options'
     | '/api/register_verify'
-    | '/api/setup'
     | '/api/test'
     | '/api/todos'
     | '/api/user_get_id'
-    | '/api/user_get_name'
     | '/_pathlessLayout/_nested-layout/route-a'
     | '/_pathlessLayout/_nested-layout/route-b'
   fileRoutesById: FileRoutesById
@@ -315,7 +279,6 @@ export interface RootRouteChildren {
   DeferredRoute: typeof DeferredRoute
   LoginRoute: typeof LoginRoute
   RedirectRoute: typeof RedirectRoute
-  SetupRoute: typeof SetupRoute
   Setup_passkeyRoute: typeof Setup_passkeyRoute
   SignupRoute: typeof SignupRoute
   ApiEnableRoute: typeof ApiEnableRoute
@@ -325,11 +288,9 @@ export interface RootRouteChildren {
   ApiRegisterRoute: typeof ApiRegisterRoute
   ApiRegister_optionsRoute: typeof ApiRegister_optionsRoute
   ApiRegister_verifyRoute: typeof ApiRegister_verifyRoute
-  ApiSetupRoute: typeof ApiSetupRoute
   ApiTestRoute: typeof ApiTestRoute
   ApiTodosRoute: typeof ApiTodosRoute
   ApiUser_get_idRoute: typeof ApiUser_get_idRoute
-  ApiUser_get_nameRoute: typeof ApiUser_get_nameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -374,13 +335,6 @@ declare module '@tanstack/react-router' {
       path: '/redirect'
       fullPath: '/redirect'
       preLoaderRoute: typeof RedirectRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/setup': {
-      id: '/setup'
-      path: '/setup'
-      fullPath: '/setup'
-      preLoaderRoute: typeof SetupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/setup_passkey': {
@@ -453,13 +407,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRegister_verifyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/setup': {
-      id: '/api/setup'
-      path: '/api/setup'
-      fullPath: '/api/setup'
-      preLoaderRoute: typeof ApiSetupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/test': {
       id: '/api/test'
       path: '/api/test'
@@ -479,13 +426,6 @@ declare module '@tanstack/react-router' {
       path: '/api/user_get_id'
       fullPath: '/api/user_get_id'
       preLoaderRoute: typeof ApiUser_get_idRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/user_get_name': {
-      id: '/api/user_get_name'
-      path: '/api/user_get_name'
-      fullPath: '/api/user_get_name'
-      preLoaderRoute: typeof ApiUser_get_nameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_pathlessLayout/_nested-layout/route-a': {
@@ -542,7 +482,6 @@ const rootRouteChildren: RootRouteChildren = {
   DeferredRoute: DeferredRoute,
   LoginRoute: LoginRoute,
   RedirectRoute: RedirectRoute,
-  SetupRoute: SetupRoute,
   Setup_passkeyRoute: Setup_passkeyRoute,
   SignupRoute: SignupRoute,
   ApiEnableRoute: ApiEnableRoute,
@@ -552,11 +491,9 @@ const rootRouteChildren: RootRouteChildren = {
   ApiRegisterRoute: ApiRegisterRoute,
   ApiRegister_optionsRoute: ApiRegister_optionsRoute,
   ApiRegister_verifyRoute: ApiRegister_verifyRoute,
-  ApiSetupRoute: ApiSetupRoute,
   ApiTestRoute: ApiTestRoute,
   ApiTodosRoute: ApiTodosRoute,
   ApiUser_get_idRoute: ApiUser_get_idRoute,
-  ApiUser_get_nameRoute: ApiUser_get_nameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
