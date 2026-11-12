@@ -1,0 +1,143 @@
+import { createFileRoute } from '@tanstack/react-router'
+import { getCookie, setCookie } from '@tanstack/react-start/server'
+import React, { useState , useEffect } from 'react';
+import { Mail, Lock, LogIn } from 'lucide-react';
+import LibAuth from '../lib/LibAuth'
+import Config from '../config'
+
+export const Route = createFileRoute('/mail_verify')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [imgSrc, setImgSrc] = useState('');
+  const [auth2Disp, setAuth2Disp] = useState('');
+
+  const apiHandle = async function(path, body){
+    console.log("#apiHandle")
+    console.log(body)
+    const r = await fetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body || {}),
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.error || 'エラー');
+    return data;    
+  }
+  const say = (m) => { $('msg').textContent = m || ''; };
+
+  useEffect(() => {
+    (async() => {
+      try{
+        const value = LibAuth.getCookieValue(Config.COOKIE_AUTH_1_KEY)
+        console.log('value=', value);
+        if(!value){
+          location.href = "/login";
+          return;
+        }
+        const resp  = await apiHandle('/api/user_get_name', 
+          { userId: Number(value) }
+        );
+        console.log(resp);
+        if(!resp.success){
+          alert("error")
+        }else{
+          //console.log(resp.data)
+          setUsername(resp.data.username);
+        }         
+      }catch(e){console.log(e)}
+    })();   
+  }, []);
+
+  const handleSubmit = async(e: React.FormEvent) => {
+    e.preventDefault();
+    // 実際のログイン処理はここに実装します
+    try{
+      const value = LibAuth.getCookieValue(Config.COOKIE_AUTH_1_KEY)
+      console.log('value=', value);
+      if(!value){ 
+        console.log("Cookie not found, redirecting to /login");
+        return;
+      }
+      const resp  = await apiHandle('/api/setup', 
+        { userId: Number(value) }
+      );
+      console.log(resp);
+      if(!resp.success){
+        alert("error")
+      }else{
+        setImgSrc(resp.data.qrDataUrl);
+      }      
+    }catch(e){console.log(e)}
+    return;    
+  };
+
+  const verify = async() => {
+    console.log("#verify");
+    try{
+      const value = LibAuth.getCookieValue(Config.COOKIE_AUTH_1_KEY)
+      console.log('value=', value);
+      if(!value){ 
+        console.log("Cookie not found, redirecting to /login");
+        return;
+      }      
+      const element = document.getElementById('code_6') as HTMLInputElement;
+      console.log("code_6=", element.value);
+      const resp  = await apiHandle('/api/otp_mail_verify', 
+        { userId: Number(value) , email: username, code: element.value}
+      );
+      console.log(resp);
+      if(!resp.success){
+        alert("error")
+      }else{
+        LibAuth.setCookie(Config.COOKIE_AUTH_2_KEY, Number(value) , 30);
+         //alert("OK")
+        location.href = "/";
+      }         
+    }catch(e){  console.log(e)}
+
+  }
+
+  const logout = async() => {
+    console.log("#logout");
+    try{
+      LibAuth.logout();
+    }catch(e){  console.log(e)}
+
+  }  
+
+  return (
+    <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
+        <div className="w-full text-center mb-2 text-lg">{username}</div>
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-semibold text-neutral-900 mb-2"
+          >コード入力</h1>
+          <p className="text-neutral-500 text-sm"></p>
+        </div>
+
+        <div id="setupArea" >
+          <p>6桁の認証コード</p>
+          <input 
+          type="text"
+          defaultValue=""
+          id="code_6"  placeholder="" 
+          className="w-full p-2 my-2 border border-gray-300 rounded" /><br />
+          <button onClick={()=>{verify();}} 
+          className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+          >認証コード送信</button>
+          < hr />
+          <button onClick={()=>{ logout();}} 
+          className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+          >ログアウト</button>
+        </div>        
+
+        <div className="mt-8 text-center text-sm text-neutral-500">
+        </div>
+      </div>
+    </div>
+  );  
+}
