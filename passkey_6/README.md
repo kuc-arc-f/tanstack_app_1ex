@@ -54,4 +54,7 @@ npm run dev                # http://localhost:3000
 * V_0_9_1: new
 
 ***
+### blog
+
+https://zenn.dev/link/comments/daf2f263bc3f41
 
