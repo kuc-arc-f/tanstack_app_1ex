@@ -32,7 +32,6 @@ https://github.com/kuc-arc-f/rs_axum_3ex/tree/main/passkey_6
 TOTP_ISSUER=DemoApp
 PORT=9000
 # NODE_ENV=production   (HTTPS 配下で secure cookie を有効化)
-DB_PATH=./app.db
 ```
 
 ***
