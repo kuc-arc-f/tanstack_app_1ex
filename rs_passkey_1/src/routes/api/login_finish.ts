@@ -1,6 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-//import { db } from "../../db";
-//import bcrypt from 'bcryptjs';
 import Config from '../../config'
 import path from 'path';
 import { promises as fs } from 'fs';

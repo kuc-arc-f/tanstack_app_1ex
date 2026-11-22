@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import bcrypt from 'bcryptjs';
 import Config from "../../config";
 
 export const Route = createFileRoute('/api/register')({

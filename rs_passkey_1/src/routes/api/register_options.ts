@@ -1,6 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-//import { db, q } from "../../db";
-//import bcrypt from 'bcryptjs';
 import crypto from 'node:crypto';
 import {
   generateRegistrationOptions,

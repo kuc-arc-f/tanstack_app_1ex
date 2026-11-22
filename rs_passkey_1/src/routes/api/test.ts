@@ -6,8 +6,6 @@ export const Route = createFileRoute('/api/test')({
 
       // GET
       GET: async () => {
-        const db_path = process.env.DB_PATH
-console.log("db_path=", db_path)
 
         const users = [
           { id: 1, name: 'Taro' },
