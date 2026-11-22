@@ -46,3 +46,6 @@ npm run dev                # http://localhost:9000
 
 ***
 ### blog
+
+https://zenn.dev/knaka0209/scraps/c096e0703de6bf
+
