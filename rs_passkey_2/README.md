@@ -1,0 +1,62 @@
+﻿# rs_passkey_2
+
+ Version: 0.9.1
+
+ Author  : 
+
+ date    : 2026/11/10
+ 
+ update  :
+
+***
+### Summary
+
+TanStack Start + PostgreSQL + axum API , Passkey authrize 2FA Example
+
+* Passkey
+* windows11 , Windows hello
+* PostgreSQL DB
+* node22
+* Linux
+
+***
+### API Server
+
+https://github.com/kuc-arc-f/rs_axum_3ex/tree/main/passkey_7
+
+* API Server(ORIGIN) http://localhost:3000
+
+***
+* Table: ./schema.sql
+
+***
+
+* .env
+```
+PORT=9000
+DATABASE_URL=postgres://root:admin@localhost:5432/mydb
+#NODE_ENV=production   (HTTPS 配下で secure cookie を有効化)
+# WebAuthn (Passkey) 設定
+# RP_ID はドメイン名のみ（ポート・スキームなし）。ローカル開発は localhost
+RP_ID=localhost
+RP_NAME=DemoApp
+# ブラウザで開くURLと完全一致させる（スキーム + ホスト + ポート）
+ORIGIN=http://localhost:9000
+# true: この端末の認証器（Windows Hello / Touch ID など）のみ
+# false: スマホ(QR)やセキュリティキーも許可
+PLATFORM_ONLY=true
+
+```
+
+***
+```
+npm install
+npm run dev                # http://localhost:9000
+```
+
+***
+### version
+* V_0_9_1: new
+
+***
+
