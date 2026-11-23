@@ -24,6 +24,21 @@ const toB64u = (buf) => {
   new Uint8Array(buf).forEach((b) => (bin += String.fromCharCode(b)));
   return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 };
+// ---------- base64url <-> ArrayBuffer ----------
+function b64urlToBuffer(str) {
+  const pad = "=".repeat((4 - (str.length % 4)) % 4);
+  const bin = atob(str.replace(/-/g, "+").replace(/_/g, "/") + pad);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes.buffer;
+}
+function bufferToB64url(buf) {
+  const bytes = new Uint8Array(buf);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
 function RouteComponent() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -71,40 +86,57 @@ function RouteComponent() {
         console.log("Cookie not found, redirecting to /login");
         return;
       }
-      const resp  = await apiHandle('/api/login_options', 
-        { userId: Number(value) }
+      const elem_username = document.getElementById('user_name') as HTMLInputElement;
+      console.log("elem_username=", elem_username.value);
+      if(!elem_username.value){
+        alert("ユーザー名を、入力下さい。")
+        return;
+      }
+
+      const resp  = await apiHandle('/api/login_start', 
+        { username: elem_username.value }
       );
       console.log("#resp");
-      console.log(resp);
-      const opts = resp.data;
-      const cred = await navigator.credentials.get({
-        publicKey: {
-          ...opts,
-          challenge: toBuf(opts.challenge),
-          allowCredentials: (opts.allowCredentials ?? []).map((c) => ({ ...c, id: toBuf(c.id) })),
-        },
-      }); 
+      console.log(resp)
+      if(resp.success === false){
+        console.log("error, resp=NG");
+        return;
+      };
+      const startData = resp.data 
+      const challenge_id = startData.challenge_id;
+      const options = startData.options;
+      console.log("#options");
+      console.log(options)
+
+      const pk = options.publicKey;
+      pk.challenge = b64urlToBuffer(pk.challenge);
+      if (pk.allowCredentials) {
+        pk.allowCredentials = pk.allowCredentials.map((c) => ({ ...c, id: b64urlToBuffer(c.id) }));
+      }
+      const cred = await navigator.credentials.get({ publicKey: pk });
       console.log("#cred");
-      console.log(cred) 
-      const r = cred.response;
-      console.log("#r");
-      console.log(r) 
-      const resp2 = await apiHandle('/api/login_verify', {
-        id: cred.id,
-        rawId: toB64u(cred.rawId),
-        type: cred.type,
-        authenticatorAttachment: cred.authenticatorAttachment ?? undefined,
-        clientExtensionResults: cred.getClientExtensionResults(),
-        response: {
-          clientDataJSON: toB64u(r.clientDataJSON),
-          authenticatorData: toB64u(r.authenticatorData),
-          signature: toB64u(r.signature),
-          userHandle: r.userHandle ? toB64u(r.userHandle) : undefined,
+      console.log(cred)
+      const resp2 = await apiHandle("/api/login_finish", {
+        challenge_id,
+        credential: {
+          id: cred.id,
+          rawId: bufferToB64url(cred.rawId),
+          type: cred.type,
+          response: {
+            authenticatorData: bufferToB64url(cred.response.authenticatorData),
+            clientDataJSON: bufferToB64url(cred.response.clientDataJSON),
+            signature: bufferToB64url(cred.response.signature),
+            userHandle: cred.response.userHandle ? bufferToB64url(cred.response.userHandle) : null,
+          },
+          extensions: cred.getClientExtensionResults?.() ?? {},
         },
-        userId: Number(value),
       });
       console.log("#resp2");
-      console.log(resp2)      
+      console.log(resp2)
+      if(resp2.success === false){
+        console.log("error, resp2=NG");
+        return;
+      };    
       if(resp2.success){
         LibAuth.setCookie(Config.COOKIE_AUTH_2_KEY, Number(value) , 30);
         location.href = "/"
@@ -125,41 +157,54 @@ function RouteComponent() {
       }
       const elem_username = document.getElementById('user_name') as HTMLInputElement;
       console.log("elem_username=", elem_username.value);
-
-      const resp  = await apiHandle('/api/register_options', 
-        { userId: Number(value) , username: elem_username.value}
+      if(!elem_username.value){
+        alert("ユーザー名を、入力下さい。")
+        return;
+      }      
+      const resp  = await apiHandle('/api/register_start', 
+        { 
+          userId: Number(value) , username: elem_username.value,
+          display_name: elem_username.value
+        }
       );
       console.log(resp);
       if(!resp.success){
         alert("error")
       }else{
+
         const optionsJSON = resp.data;
         console.log("#optionsJSON")
         console.log(optionsJSON)
-        const opts = optionsJSON;
-        const cred = await navigator.credentials.create({
-          publicKey: {
-            ...opts,
-            challenge: toBuf(opts.challenge),
-            user: { ...opts.user, id: toBuf(opts.user.id) },
-            excludeCredentials: (opts.excludeCredentials ?? []).map((c) => ({ ...c, id: toBuf(c.id) })),
-          },
-        });        
+        const challenge_id = optionsJSON.challenge_id;
+        const options = optionsJSON.options;
+        console.log("#options")
+        console.log(options)
+
+        const pk = options.publicKey;
+        pk.challenge = b64urlToBuffer(pk.challenge);
+        pk.user.id = b64urlToBuffer(pk.user.id);
+        if (pk.excludeCredentials) {
+          pk.excludeCredentials = pk.excludeCredentials.map((c) => ({ ...c, id: b64urlToBuffer(c.id) }));
+        }
+        const cred = await navigator.credentials.create({ publicKey: pk });
         console.log("#cred")
         console.log(cred)
-        const res2 = await apiHandle('/api/register_verify', {
-          id: cred.id,
-          rawId: toB64u(cred.rawId),
-          type: cred.type,
-          authenticatorAttachment: cred.authenticatorAttachment ?? undefined,
-          clientExtensionResults: cred.getClientExtensionResults(),
-          response: {
-            clientDataJSON: toB64u(cred.response.clientDataJSON),
-            attestationObject: toB64u(cred.response.attestationObject),
-            transports: cred.response.getTransports?.() ?? [],
+
+        const res2 = await apiHandle("/api/register_finish", {
+          challenge_id,
+          credential: {
+            id: cred.id,
+            rawId: bufferToB64url(cred.rawId),
+            type: cred.type,
+            response: {
+              attestationObject: bufferToB64url(cred.response.attestationObject),
+              clientDataJSON: bufferToB64url(cred.response.clientDataJSON),
+              transports: cred.response.getTransports?.() ?? null,
+            },
+            extensions: cred.getClientExtensionResults?.() ?? {},
           },
-          userId: Number(value),
-        });        
+        });
+        //setStatus(`登録完了：${user.display_name} としてログインしました`, "ok");
         console.log("#res2")
         console.log(res2)
         if(res2.success === true){
@@ -181,6 +226,11 @@ function RouteComponent() {
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4">
+      <div className="w-full my-2 max-w-md bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
+        <p className="text-neutral-500">* ユーザー名</p>
+        <input id="user_name" placeholder="(例) yamada" 
+        className="w-full p-2 border border-gray-300 rounded" /><br />
+      </div>
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
         <div className="text-left mb-2">
           <h1 className="text-2xl font-semibold text-neutral-900 mb-2">ログイン</h1>
@@ -205,9 +255,6 @@ function RouteComponent() {
       <div className="w-full my-4 max-w-md bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
         <h1 className="text-2xl font-semibold text-neutral-900 mb-2"
         >新規登録</h1>
-        <p className="text-neutral-500">* ユーザー名</p>
-        <input id="user_name" placeholder="(例) yamada" 
-        className="w-full p-2 border border-gray-300 rounded" /><br />
         <button onClick={()=>{enable();}} 
         className="w-full my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
         >Passkeyを作成</button><br />

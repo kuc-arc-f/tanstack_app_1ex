@@ -1,13 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-//import { pool } from "../../db";
-//import bcrypt from 'bcryptjs';
 import Config from '../../config'
 import path from 'path';
 import { promises as fs } from 'fs';
 
 const regenerate = (req) => new Promise((resolve, reject) => req.session.regenerate((e) => (e ? reject(e) : resolve())));
-//const DUMMY_HASH = bcrypt.hashSync('dummy-password', 12); // ユーザー存在判定のタイミング差を減らす
-
 
 export const Route = createFileRoute('/api/login')({
   server: {

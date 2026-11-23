@@ -18,15 +18,13 @@ import { Route as RedirectRouteImport } from './routes/redirect'
 import { Route as Setup_passkeyRouteImport } from './routes/setup_passkey'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
-import { Route as ApiEnableRouteImport } from './routes/api/enable'
 import { Route as ApiLoginRouteImport } from './routes/api/login'
-import { Route as ApiLogin_optionsRouteImport } from './routes/api/login_options'
-import { Route as ApiLogin_verifyRouteImport } from './routes/api/login_verify'
+import { Route as ApiLogin_finishRouteImport } from './routes/api/login_finish'
+import { Route as ApiLogin_startRouteImport } from './routes/api/login_start'
 import { Route as ApiRegisterRouteImport } from './routes/api/register'
-import { Route as ApiRegister_optionsRouteImport } from './routes/api/register_options'
-import { Route as ApiRegister_verifyRouteImport } from './routes/api/register_verify'
+import { Route as ApiRegister_finishRouteImport } from './routes/api/register_finish'
+import { Route as ApiRegister_startRouteImport } from './routes/api/register_start'
 import { Route as ApiTestRouteImport } from './routes/api/test'
-import { Route as ApiTodosRouteImport } from './routes/api/todos'
 import { Route as ApiUser_get_idRouteImport } from './routes/api/user_get_id'
 import { Route as PathlessLayoutNestedLayoutRouteARouteImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 import { Route as PathlessLayoutNestedLayoutRouteBRouteImport } from './routes/_pathlessLayout/_nested-layout/route-b'
@@ -75,24 +73,19 @@ const PathlessLayoutNestedLayoutRoute =
     id: '/_nested-layout',
     getParentRoute: () => PathlessLayoutRoute,
   } as any)
-const ApiEnableRoute = ApiEnableRouteImport.update({
-  id: '/api/enable',
-  path: '/api/enable',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiLoginRoute = ApiLoginRouteImport.update({
   id: '/api/login',
   path: '/api/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiLogin_optionsRoute = ApiLogin_optionsRouteImport.update({
-  id: '/api/login_options',
-  path: '/api/login_options',
+const ApiLogin_finishRoute = ApiLogin_finishRouteImport.update({
+  id: '/api/login_finish',
+  path: '/api/login_finish',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiLogin_verifyRoute = ApiLogin_verifyRouteImport.update({
-  id: '/api/login_verify',
-  path: '/api/login_verify',
+const ApiLogin_startRoute = ApiLogin_startRouteImport.update({
+  id: '/api/login_start',
+  path: '/api/login_start',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiRegisterRoute = ApiRegisterRouteImport.update({
@@ -100,24 +93,19 @@ const ApiRegisterRoute = ApiRegisterRouteImport.update({
   path: '/api/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRegister_optionsRoute = ApiRegister_optionsRouteImport.update({
-  id: '/api/register_options',
-  path: '/api/register_options',
+const ApiRegister_finishRoute = ApiRegister_finishRouteImport.update({
+  id: '/api/register_finish',
+  path: '/api/register_finish',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRegister_verifyRoute = ApiRegister_verifyRouteImport.update({
-  id: '/api/register_verify',
-  path: '/api/register_verify',
+const ApiRegister_startRoute = ApiRegister_startRouteImport.update({
+  id: '/api/register_start',
+  path: '/api/register_start',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTestRoute = ApiTestRouteImport.update({
   id: '/api/test',
   path: '/api/test',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiTodosRoute = ApiTodosRouteImport.update({
-  id: '/api/todos',
-  path: '/api/todos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiUser_get_idRoute = ApiUser_get_idRouteImport.update({
@@ -146,15 +134,13 @@ export interface FileRoutesByFullPath {
   '/redirect': typeof RedirectRoute
   '/setup_passkey': typeof Setup_passkeyRoute
   '/signup': typeof SignupRoute
-  '/api/enable': typeof ApiEnableRoute
   '/api/login': typeof ApiLoginRoute
-  '/api/login_options': typeof ApiLogin_optionsRoute
-  '/api/login_verify': typeof ApiLogin_verifyRoute
+  '/api/login_finish': typeof ApiLogin_finishRoute
+  '/api/login_start': typeof ApiLogin_startRoute
   '/api/register': typeof ApiRegisterRoute
-  '/api/register_options': typeof ApiRegister_optionsRoute
-  '/api/register_verify': typeof ApiRegister_verifyRoute
+  '/api/register_finish': typeof ApiRegister_finishRoute
+  '/api/register_start': typeof ApiRegister_startRoute
   '/api/test': typeof ApiTestRoute
-  '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
@@ -167,15 +153,13 @@ export interface FileRoutesByTo {
   '/redirect': typeof RedirectRoute
   '/setup_passkey': typeof Setup_passkeyRoute
   '/signup': typeof SignupRoute
-  '/api/enable': typeof ApiEnableRoute
   '/api/login': typeof ApiLoginRoute
-  '/api/login_options': typeof ApiLogin_optionsRoute
-  '/api/login_verify': typeof ApiLogin_verifyRoute
+  '/api/login_finish': typeof ApiLogin_finishRoute
+  '/api/login_start': typeof ApiLogin_startRoute
   '/api/register': typeof ApiRegisterRoute
-  '/api/register_options': typeof ApiRegister_optionsRoute
-  '/api/register_verify': typeof ApiRegister_verifyRoute
+  '/api/register_finish': typeof ApiRegister_finishRoute
+  '/api/register_start': typeof ApiRegister_startRoute
   '/api/test': typeof ApiTestRoute
-  '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
@@ -191,15 +175,13 @@ export interface FileRoutesById {
   '/setup_passkey': typeof Setup_passkeyRoute
   '/signup': typeof SignupRoute
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
-  '/api/enable': typeof ApiEnableRoute
   '/api/login': typeof ApiLoginRoute
-  '/api/login_options': typeof ApiLogin_optionsRoute
-  '/api/login_verify': typeof ApiLogin_verifyRoute
+  '/api/login_finish': typeof ApiLogin_finishRoute
+  '/api/login_start': typeof ApiLogin_startRoute
   '/api/register': typeof ApiRegisterRoute
-  '/api/register_options': typeof ApiRegister_optionsRoute
-  '/api/register_verify': typeof ApiRegister_verifyRoute
+  '/api/register_finish': typeof ApiRegister_finishRoute
+  '/api/register_start': typeof ApiRegister_startRoute
   '/api/test': typeof ApiTestRoute
-  '/api/todos': typeof ApiTodosRoute
   '/api/user_get_id': typeof ApiUser_get_idRoute
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
@@ -214,15 +196,13 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/setup_passkey'
     | '/signup'
-    | '/api/enable'
     | '/api/login'
-    | '/api/login_options'
-    | '/api/login_verify'
+    | '/api/login_finish'
+    | '/api/login_start'
     | '/api/register'
-    | '/api/register_options'
-    | '/api/register_verify'
+    | '/api/register_finish'
+    | '/api/register_start'
     | '/api/test'
-    | '/api/todos'
     | '/api/user_get_id'
     | '/route-a'
     | '/route-b'
@@ -235,15 +215,13 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/setup_passkey'
     | '/signup'
-    | '/api/enable'
     | '/api/login'
-    | '/api/login_options'
-    | '/api/login_verify'
+    | '/api/login_finish'
+    | '/api/login_start'
     | '/api/register'
-    | '/api/register_options'
-    | '/api/register_verify'
+    | '/api/register_finish'
+    | '/api/register_start'
     | '/api/test'
-    | '/api/todos'
     | '/api/user_get_id'
     | '/route-a'
     | '/route-b'
@@ -258,15 +236,13 @@ export interface FileRouteTypes {
     | '/setup_passkey'
     | '/signup'
     | '/_pathlessLayout/_nested-layout'
-    | '/api/enable'
     | '/api/login'
-    | '/api/login_options'
-    | '/api/login_verify'
+    | '/api/login_finish'
+    | '/api/login_start'
     | '/api/register'
-    | '/api/register_options'
-    | '/api/register_verify'
+    | '/api/register_finish'
+    | '/api/register_start'
     | '/api/test'
-    | '/api/todos'
     | '/api/user_get_id'
     | '/_pathlessLayout/_nested-layout/route-a'
     | '/_pathlessLayout/_nested-layout/route-b'
@@ -281,15 +257,13 @@ export interface RootRouteChildren {
   RedirectRoute: typeof RedirectRoute
   Setup_passkeyRoute: typeof Setup_passkeyRoute
   SignupRoute: typeof SignupRoute
-  ApiEnableRoute: typeof ApiEnableRoute
   ApiLoginRoute: typeof ApiLoginRoute
-  ApiLogin_optionsRoute: typeof ApiLogin_optionsRoute
-  ApiLogin_verifyRoute: typeof ApiLogin_verifyRoute
+  ApiLogin_finishRoute: typeof ApiLogin_finishRoute
+  ApiLogin_startRoute: typeof ApiLogin_startRoute
   ApiRegisterRoute: typeof ApiRegisterRoute
-  ApiRegister_optionsRoute: typeof ApiRegister_optionsRoute
-  ApiRegister_verifyRoute: typeof ApiRegister_verifyRoute
+  ApiRegister_finishRoute: typeof ApiRegister_finishRoute
+  ApiRegister_startRoute: typeof ApiRegister_startRoute
   ApiTestRoute: typeof ApiTestRoute
-  ApiTodosRoute: typeof ApiTodosRoute
   ApiUser_get_idRoute: typeof ApiUser_get_idRoute
 }
 
@@ -358,13 +332,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteImport
       parentRoute: typeof PathlessLayoutRoute
     }
-    '/api/enable': {
-      id: '/api/enable'
-      path: '/api/enable'
-      fullPath: '/api/enable'
-      preLoaderRoute: typeof ApiEnableRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/login': {
       id: '/api/login'
       path: '/api/login'
@@ -372,18 +339,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/login_options': {
-      id: '/api/login_options'
-      path: '/api/login_options'
-      fullPath: '/api/login_options'
-      preLoaderRoute: typeof ApiLogin_optionsRouteImport
+    '/api/login_finish': {
+      id: '/api/login_finish'
+      path: '/api/login_finish'
+      fullPath: '/api/login_finish'
+      preLoaderRoute: typeof ApiLogin_finishRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/login_verify': {
-      id: '/api/login_verify'
-      path: '/api/login_verify'
-      fullPath: '/api/login_verify'
-      preLoaderRoute: typeof ApiLogin_verifyRouteImport
+    '/api/login_start': {
+      id: '/api/login_start'
+      path: '/api/login_start'
+      fullPath: '/api/login_start'
+      preLoaderRoute: typeof ApiLogin_startRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/register': {
@@ -393,18 +360,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/register_options': {
-      id: '/api/register_options'
-      path: '/api/register_options'
-      fullPath: '/api/register_options'
-      preLoaderRoute: typeof ApiRegister_optionsRouteImport
+    '/api/register_finish': {
+      id: '/api/register_finish'
+      path: '/api/register_finish'
+      fullPath: '/api/register_finish'
+      preLoaderRoute: typeof ApiRegister_finishRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/register_verify': {
-      id: '/api/register_verify'
-      path: '/api/register_verify'
-      fullPath: '/api/register_verify'
-      preLoaderRoute: typeof ApiRegister_verifyRouteImport
+    '/api/register_start': {
+      id: '/api/register_start'
+      path: '/api/register_start'
+      fullPath: '/api/register_start'
+      preLoaderRoute: typeof ApiRegister_startRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/test': {
@@ -412,13 +379,6 @@ declare module '@tanstack/react-router' {
       path: '/api/test'
       fullPath: '/api/test'
       preLoaderRoute: typeof ApiTestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/todos': {
-      id: '/api/todos'
-      path: '/api/todos'
-      fullPath: '/api/todos'
-      preLoaderRoute: typeof ApiTodosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/user_get_id': {
@@ -484,15 +444,13 @@ const rootRouteChildren: RootRouteChildren = {
   RedirectRoute: RedirectRoute,
   Setup_passkeyRoute: Setup_passkeyRoute,
   SignupRoute: SignupRoute,
-  ApiEnableRoute: ApiEnableRoute,
   ApiLoginRoute: ApiLoginRoute,
-  ApiLogin_optionsRoute: ApiLogin_optionsRoute,
-  ApiLogin_verifyRoute: ApiLogin_verifyRoute,
+  ApiLogin_finishRoute: ApiLogin_finishRoute,
+  ApiLogin_startRoute: ApiLogin_startRoute,
   ApiRegisterRoute: ApiRegisterRoute,
-  ApiRegister_optionsRoute: ApiRegister_optionsRoute,
-  ApiRegister_verifyRoute: ApiRegister_verifyRoute,
+  ApiRegister_finishRoute: ApiRegister_finishRoute,
+  ApiRegister_startRoute: ApiRegister_startRoute,
   ApiTestRoute: ApiTestRoute,
-  ApiTodosRoute: ApiTodosRoute,
   ApiUser_get_idRoute: ApiUser_get_idRoute,
 }
 export const routeTree = rootRouteImport

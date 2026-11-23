@@ -27,9 +27,6 @@ https://github.com/kuc-arc-f/rs_axum_3ex/tree/main/passkey_7
 * API Server(ORIGIN) http://localhost:3000
 
 ***
-* Table: ./schema.sql
-
-***
 
 * .env
 ```
