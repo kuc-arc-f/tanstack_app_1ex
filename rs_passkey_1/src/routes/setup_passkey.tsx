@@ -226,7 +226,7 @@ function RouteComponent() {
 
         <hr className="my-2" />
         <div className="text-left mb-2">
-          <h1 className="text-2xl font-semibold text-neutral-900 mb-2">ログイン</h1>
+          <h1 className="text-2xl font-semibold text-neutral-900 mx-2 mb-2">ログイン</h1>
           {/*
           <p className="text-neutral-500 text-sm"
           >Windows Helloが 保存済みパスキーを表示します </p>

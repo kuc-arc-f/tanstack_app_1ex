@@ -12,6 +12,7 @@ export const Route = createFileRoute('/login')({
 function RouteComponent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errMsg, setErrMsg] = useState("");
 
   const apiHandle = async function(path, body){
     console.log("#apiHandle")
@@ -31,12 +32,14 @@ function RouteComponent() {
     e.preventDefault();
     // 実際のログイン処理はここに実装します
     console.log('ログイン試行:', { email, password });
+    setErrMsg("")
     try{
       const resp  = await apiHandle('/api/login', 
         { username: email , password: password }
       );
       console.log(resp);
       if(!resp.success){
+        setErrMsg(resp.message)
         alert("error")
       }else{
         const res2  = await apiHandle('/api/user_get_id', 
@@ -117,7 +120,13 @@ function RouteComponent() {
               />
             </div>
           </div>
-
+          {/* error-text */}
+          <div>  
+            {(errMsg !=="") ? (<div className="text-red-600">
+              {errMsg}
+            </div>
+            ):(<></>)}
+          </div>
           {/* ログインボタン */}
           <button
             type="submit"

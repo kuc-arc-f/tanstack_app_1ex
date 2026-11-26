@@ -34,6 +34,7 @@ export const Route = createFileRoute('/api/login_start')({
         });
         // レスポンスのステータスコードを確認
         if (!response.ok) {
+          console.log('error, response.ok = NG')
           return Response.json({
             success: false,
             message: 'error, response.ok = NG',
