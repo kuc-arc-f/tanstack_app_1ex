@@ -45,6 +45,7 @@ function RouteComponent() {
   const [password, setPassword] = useState('');
   const [imgSrc, setImgSrc] = useState('a');
   const [auth2Disp, setAuth2Disp] = useState('');
+  const [errMsg, setErrMsg] = useState("");
 
   const apiHandle = async function(path, body){
     console.log("#apiHandle")
@@ -80,6 +81,7 @@ function RouteComponent() {
     e.preventDefault();
     // 実際のログイン処理はここに実装します
     try{
+      setErrMsg("")
       const value = LibAuth.getCookieValue(Config.COOKIE_AUTH_1_KEY)
       console.log('value=', value);
       if(!value){ 
@@ -99,6 +101,7 @@ function RouteComponent() {
       console.log("#resp");
       console.log(resp)
       if(resp.success === false){
+        setErrMsg(resp.message)
         console.log("error, resp=NG");
         return;
       };
@@ -149,6 +152,7 @@ function RouteComponent() {
   const enable = async() => {
     console.log("#enable");
     try{
+      setErrMsg("")
       const value = LibAuth.getCookieValue(Config.COOKIE_AUTH_1_KEY)
       console.log('value=', value);
       if(!value){ 
@@ -169,9 +173,9 @@ function RouteComponent() {
       );
       console.log(resp);
       if(!resp.success){
+        setErrMsg(resp.message)
         alert("error")
       }else{
-
         const optionsJSON = resp.data;
         console.log("#optionsJSON")
         console.log(optionsJSON)
@@ -230,6 +234,14 @@ function RouteComponent() {
         <p className="text-neutral-500">* ユーザー名</p>
         <input id="user_name" placeholder="(例) yamada" 
         className="w-full p-2 border border-gray-300 rounded" /><br />
+        <hr />
+        {/* error-text */}
+        <div>  
+          {(errMsg !=="") ? (<div className="text-red-600">
+            {errMsg}
+          </div>
+          ):(<></>)}
+        </div>        
       </div>
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
         <div className="text-left mb-2">
@@ -255,6 +267,8 @@ function RouteComponent() {
       <div className="w-full my-4 max-w-md bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
         <h1 className="text-2xl font-semibold text-neutral-900 mb-2"
         >新規登録</h1>
+        <hr />
+        
         <button onClick={()=>{enable();}} 
         className="w-full my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
         >Passkeyを作成</button><br />

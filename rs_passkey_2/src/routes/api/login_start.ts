@@ -12,11 +12,19 @@ export const Route = createFileRoute('/api/login_start')({
 
       // POST
       POST: async ({ request }) => {
+        console.log("#login_start")
         let allowCredentials
 
         const body = await request.json()
         console.log(body)
         const username = body.username;
+        if (!/^[\w.@-]{3,64}$/.test(username)) {
+          return Response.json({
+            success: false,
+            message: 'username は 3〜64 文字です',
+            data: body,
+          })
+        }
         const data = {
           username: username 
         }
@@ -31,6 +39,7 @@ export const Route = createFileRoute('/api/login_start')({
 
         // レスポンスのステータスコードを確認
         if (!response.ok) {
+          console.log(`HTTPエラー! ステータス: ${response.status}`);
           return Response.json({
             success: false,
             message: `HTTPエラー! ステータス: ${response.status}`,
